@@ -1,24 +1,14 @@
-/* DICA DE JÚNIOR: 
-   Sempre coloque seu código JS dentro de um 'DOMContentLoaded'.
-   Isso garante que o script só vai rodar DEPOIS que o HTML
-   inteiro (o DOM) foi carregado. 
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
-    // ----------------------------------------
-    // === MÓDULO 1: MENU MOBILE ===
-    // ----------------------------------------
+    // MENU MOBILE
     const menuToggleButton = document.querySelector('.menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
     if (menuToggleButton && navLinks) {
-        
         menuToggleButton.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             menuToggleButton.classList.toggle('active');
         });
 
-        // Fechar o menu quando clicar em um link (no mobile)
         const allLinks = navLinks.querySelectorAll('a');
         allLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -30,20 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ----------------------------------------
-    // === MÓDULO 2: CARROSSEL DE DEPOIMENTOS ===
-    // Chamamos a função de inicialização aqui!
-    // ----------------------------------------
-    initTestimonialSlider(); 
-}); // <<< AQUI FECHA O ÚNICO E PRINCIPAL DOMContentLoaded
+    // CARROSSEL DE DEPOIMENTOS
+    initTestimonialSlider();
+});
 
-// ----------------------------------------
-// === FUNÇÃO DO CARROSSEL (FORA DO DOMContentLoaded para ficar mais limpo) ===
-// ----------------------------------------
 function initTestimonialSlider() {
-    // 🚀 NOVO: Função para calcular a largura exata de um slide (Card + Gap)
-
-    function getSlideWidth() {
     const sliderWrapper = document.querySelector('.testimonial-slider-wrapper');
     const slidesContainer = document.querySelector('.testimonial-slides');
     const cards = document.querySelectorAll('.testimonial-card');
@@ -58,16 +39,16 @@ function initTestimonialSlider() {
     const autoplayInterval = 6000;
     let autoplayTimer;
 
-   // Função principal para mover o carrossel (SUBSTITUA ESTA FUNÇÃO EXISTENTE)
-function updateSlider() {
-    // Pega a largura do passo dinamicamente
-    const slideWidth = getSlideWidth(); 
-    
-    // Calcula o novo deslocamento (offset) baseado no índice atual e no slideWidth
-    const offset = -currentIndex * slideWidth; 
-    
-    slidesContainer.style.transform = `translateX(${offset}px)`;
-}
+    function getSlideWidth() {
+        // a largura de referência é SEMPRE a largura do wrapper
+        return sliderWrapper.offsetWidth;
+    }
+
+    function updateSlider() {
+        const slideWidth = getSlideWidth();
+        const offset = -currentIndex * slideWidth;
+        slidesContainer.style.transform = `translateX(${offset}px)`;
+    }
 
     function goToPrev() {
         currentIndex = (currentIndex === 0) ? cards.length - 1 : currentIndex - 1;
@@ -81,76 +62,47 @@ function updateSlider() {
         resetAutoplay();
     }
 
-    nextButton.addEventListener('click', goToNext);
-    prevButton.addEventListener('click', goToPrev);
-
-    function startAutoplay() {
-        if (autoplayTimer) clearInterval(autoplayTimer); 
-
-        autoplayTimer = setInterval(() => {
-            goToNext();
-        }, autoplayInterval);
+    if (nextButton && prevButton) {
+        nextButton.addEventListener('click', goToNext);
+        prevButton.addEventListener('click', goToPrev);
     }
 
-    // Reinicia o autoplay (mas só no desktop, como definimos no CSS)
+    function startAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+        if (window.innerWidth <= 700) return;
+        autoplayTimer = setInterval(goToNext, autoplayInterval);
+    }
+
     function resetAutoplay() {
-        if (window.innerWidth > 700) { 
+        if (window.innerWidth > 700) {
             startAutoplay();
+        } else if (autoplayTimer) {
+            clearInterval(autoplayTimer);
         }
     }
 
-    // === Lógica para Touch Swipe (Mobile) ===
-    slidesContainer.addEventListener('mousedown', (e) => {
+    // Drag / Swipe
+    function handleDragStart(clientX) {
         isDragging = true;
-        startX = e.clientX;
+        startX = clientX;
         slidesContainer.style.transition = 'none';
-        clearInterval(autoplayTimer); 
-    });
+        if (autoplayTimer) clearInterval(autoplayTimer);
+    }
 
-    slidesContainer.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].clientX;
-        slidesContainer.style.transition = 'none';
-        clearInterval(autoplayTimer);
-    });
-
-    slidesContainer.addEventListener('mousemove', (e) => {
+    function handleDragMove(clientX) {
         if (!isDragging) return;
-        const currentX = e.clientX;
-        const walk = currentX - startX;
-        slidesContainer.style.transform = `translateX(${-currentIndex * sliderWrapper.offsetWidth + walk}px)`;
-    });
+        const walk = clientX - startX;
+        const baseOffset = -currentIndex * getSlideWidth();
+        slidesContainer.style.transform = `translateX(${baseOffset + walk}px)`;
+    }
 
-    slidesContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const currentX = e.touches[0].clientX;
-        const walk = currentX - startX;
-        slidesContainer.style.transform = `translateX(${-currentIndex * sliderWrapper.offsetWidth + walk}px)`;
-    });
-
-    slidesContainer.addEventListener('mouseup', handleDragEnd);
-    slidesContainer.addEventListener('touchend', handleDragEnd);
-    slidesContainer.addEventListener('mouseleave', () => {
-        if (isDragging) handleDragEnd();
-    });
-    
-    // Função unificada para fim do arrasto (Mouse e Touch)
-    function handleDragEnd(event) {
+    function handleDragEnd(endX) {
         if (!isDragging) return;
         isDragging = false;
         slidesContainer.style.transition = 'transform 0.5s ease-in-out';
 
-        // Tenta pegar a posição final do mouse (mouseup) ou do toque (touchend)
-        const endX = event.clientX !== undefined ? event.clientX : (event.changedTouches && event.changedTouches[0].clientX);
-        
-        if (endX === undefined) {
-             updateSlider(); // Se não conseguir a posição final (bug), volta para o slide atual
-             resetAutoplay();
-             return;
-        }
-
         const dragDistance = startX - endX;
-        const sensitivity = sliderWrapper.offsetWidth * 0.2; 
+        const sensitivity = sliderWrapper.offsetWidth * 0.2;
 
         if (dragDistance > sensitivity) {
             goToNext();
@@ -162,8 +114,45 @@ function updateSlider() {
         }
     }
 
-    window.addEventListener('resize', updateSlider);
+    slidesContainer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        handleDragStart(e.clientX);
+    });
 
-    updateSlider(); 
+    slidesContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        handleDragMove(e.clientX);
+    });
+
+    slidesContainer.addEventListener('mouseup', (e) => {
+        handleDragEnd(e.clientX);
+    });
+
+    slidesContainer.addEventListener('mouseleave', (e) => {
+        if (!isDragging) return;
+        handleDragEnd(e.clientX || startX);
+    });
+
+    slidesContainer.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        handleDragStart(touch.clientX);
+    }, { passive: true });
+
+    slidesContainer.addEventListener('touchmove', (e) => {
+        const touch = e.touches[0];
+        handleDragMove(touch.clientX);
+    }, { passive: true });
+
+    slidesContainer.addEventListener('touchend', (e) => {
+        const touch = e.changedTouches[0];
+        handleDragEnd(touch.clientX);
+    });
+
+    window.addEventListener('resize', () => {
+        updateSlider();
+        resetAutoplay();
+    });
+
+    updateSlider();
     startAutoplay();
 }

@@ -1,67 +1,54 @@
-/* === [ CONFIGURAÇÃO GLOBAL E VARIÁVEIS ] === */
-/* Isso é o 'cérebro' do nosso design. */
 :root {
-    /* Paleta de Cores (Seja elegante!) */
-    /* Dica: Use tons pastéis, nudes, rosés e um tom forte (ex: dourado) para os CTAs. */
-    --color-primary: #ffd6f9;   /* Um dourado (para CTAs) */
-    --color-primary-dark: #ffd6f9; /* Dourado mais escuro (para hover) */
-    --color-secondary: #ffd6f9; /* Um nude/bege (para fundos) */
-    --color-text: #333;         /* Texto principal (nunca preto puro) */
-    --color-text-light: #555;   /* Texto secundário */
+    --color-primary: #ffd6f9;
+    --color-primary-dark: #f7bfe9;
+    --color-secondary: #fff7fb;
+    --color-text: #333;
+    --color-text-light: #555;
     --color-white: #FFFFFF;
     --color-border: #e0e0e0;
 
-    /* Tipografia (Fontes que importamos no HTML) */
-    --font-headings: 'Playfair Display', serif; /* Fontes elegantes para títulos */
-    --font-body: 'Montserrat', sans-serif;      /* Fontes limpas para texto */
+    --font-headings: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
 
-    /* Espaçamento (Consistência é tudo) */
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 32px;
     --spacing-xl: 64px;
     
-    /* Outros */
     --border-radius: 8px;
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* === [ RESET BÁSICO (O 'salva-vidas') ] === */
-/* Isso garante que todos os navegadores mostrem as coisas da mesma forma. */
 *,
 *::before,
 *::after {
-    box-sizing: border-box; /* O 'border-box' é a melhor invenção do CSS. */
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
 html {
-    scroll-behavior: smooth; /* Animação 'macia' quando clica nos links do menu. */
-    font-size: 16px; /* Base do tamanho da fonte */
+    scroll-behavior: smooth;
+    font-size: 16px;
 }
 
 body {
     font-family: var(--font-body);
     color: var(--color-text);
     background-color: var(--color-white);
-    line-height: 1.6; /* Espaçamento entre linhas (leiturabilidade) */
-    -webkit-font-smoothing: antialiased; /* Deixa a fonte mais bonita */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
-
-/* === [ UTILITÁRIOS GLOBAIS ] === */
-/* Classes que podemos reutilizar em qualquer lugar. */
 
 .container {
-    width: 90%; /* Ocupa 90% da tela */
-    max-width: 1100px; /* Mas no máximo 1100px (em telas grandes) */
-    margin: 0 auto; /* Centraliza o conteúdo */
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-/* Títulos das Seções (Padrão) */
 .section-title {
     font-family: var(--font-headings);
-    font-size: 2.5rem; /* rem é uma unidade relativa (melhor pra acessibilidade) */
+    font-size: 2.5rem;
     color: var(--color-text);
     text-align: center;
     margin-bottom: var(--spacing-sm);
@@ -74,7 +61,6 @@ body {
     margin-bottom: var(--spacing-lg);
 }
 
-/* O Botão de Ação (CTA) - TEM QUE CHAMAR ATENÇÃO! */
 .cta-button {
     display: inline-block;
     background-color: var(--color-primary);
@@ -84,7 +70,7 @@ body {
     font-weight: 700;
     text-decoration: none;
     border-radius: var(--border-radius);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     border: none;
     cursor: pointer;
@@ -93,33 +79,32 @@ body {
 .cta-button:hover,
 .cta-button:focus {
     background-color: var(--color-primary-dark);
-    transform: translateY(-3px); /* Efeito 'saltitante' sutil */
+    transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 img {
-    max-width: 100%; /* Imagens nunca 'vazam' da tela */
+    max-width: 100%;
     height: auto;
     display: block;
 }
 
-/* === [ 1. CABEÇALHO E NAVEGAÇÃO ] === */
+/* HEADER */
+
 .main-header {
     background-color: var(--color-white);
     padding: var(--spacing-md) 0;
     border-bottom: 1px solid var(--color-border);
-    position: sticky; /* Deixa o menu 'colado' no topo ao rolar */
+    position: sticky;
     top: 0;
-    z-index: 1000; /* Garante que ele fique por cima de tudo */
+    z-index: 1000;
     box-shadow: var(--box-shadow);
 }
 
-/* Estamos usando Flexbox para o layout do cabeçalho. */
-/* É a forma moderna de alinhar coisas horizontalmente. */
 .main-header .container {
     display: flex;
-    justify-content: space-between; /* 'space-between' joga a logo pra esquerda e o menu pra direita */
-    align-items: center; /* Alinha tudo verticalmente no centro */
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
@@ -136,9 +121,9 @@ img {
 }
 
 .nav-links {
-    list-style: none; /* Tira as 'bolinhas' da lista */
-    display: flex; /* Alinha os links do menu */
-    gap: var(--spacing-md); /* Espaço entre os links */
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-md);
 }
 
 .nav-links li {
@@ -158,20 +143,23 @@ img {
     color: var(--color-primary);
 }
 
-/* O botão de agendar no menu tem que ser um CTA */
 .nav-links .nav-button {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-radius: 999px;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.9rem;
 }
 
-/* Botão Hambúrguer (só aparece no mobile) */
+/* MENU MOBILE */
+
 .menu-toggle {
-    display: none; /* Escondido por padrão */
+    display: none;
     background: none;
     border: none;
     cursor: pointer;
     flex-direction: column;
-    gap: 5px; /* Espaço entre as barras */
+    gap: 5px;
 }
 
 .menu-toggle .bar {
@@ -182,30 +170,41 @@ img {
     transition: all 0.3s ease;
 }
 
-/* === [ 2. SEÇÃO HERO ] === */
+/* HERO */
+
 .hero {
-    height: 90vh; /* Ocupa 90% da altura da tela */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/fundo.png'); /* Imagem de fundo com um filtro escuro (pro texto ler melhor) */
+    position: relative;
+    height: 90vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('images/fundo.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Efeito 'Parallax' sutil */
-
-    /* Alinhando o conteúdo do Hero no centro (vertical e horizontal) */
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 0 var(--spacing-md);
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 55%);
+    pointer-events: none;
 }
 
 .hero-content {
+    position: relative;
     color: var(--color-white);
     max-width: 700px;
+    z-index: 1;
 }
 
 .hero-title {
     font-family: var(--font-headings);
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     margin-bottom: var(--spacing-md);
     line-height: 1.2;
 }
@@ -218,24 +217,20 @@ img {
 
 .hero-cta {
     font-size: 1.1rem;
-    padding: var(--spacing-md) var(--spacing-xl); /* Botão maior */
+    padding: var(--spacing-md) var(--spacing-xl);
 }
 
-/* === [ 3. SEÇÃO DE SERVIÇOS ] === */
+/* SERVIÇOS */
+
 .services {
     padding: var(--spacing-xl) 0;
-    background-color: var(--color-secondary); /* Fundo com cor sutil */
+    background-color: var(--color-secondary);
 }
 
-/* Aqui usamos CSS Grid. É PERFEITO para... grids! */
 .services-grid {
     display: grid;
-    /* 'repeat(auto-fit, ...)' é mágico. 
-     Ele cria quantas colunas couberem (com no mínimo 300px).
-     Em telas pequenas, ele vira 1 coluna sozinho. Responsivo automático!
-    */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-lg); /* Espaço entre os cards */
+    gap: var(--spacing-lg);
 }
 
 .service-card {
@@ -248,7 +243,7 @@ img {
 }
 
 .service-card:hover {
-    transform: translateY(-10px); /* Efeito 'flutuar' */
+    transform: translateY(-10px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -263,12 +258,12 @@ img {
     color: var(--color-text-light);
 }
 
-/* === [ 4. SEÇÃO DA GALERIA ] === */
+/* GALERIA */
+
 .gallery {
     padding: var(--spacing-xl) 0;
 }
 
-/* Grid de novo, mas dessa vez com 4 colunas em telas grandes */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -278,24 +273,24 @@ img {
 .gallery-item {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+    object-fit: cover;
     border-radius: var(--border-radius);
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .gallery-item:hover {
-    transform: scale(1.05); /* Efeito de Zoom */
-    opacity: 0.8;
-    cursor: pointer; /* (Idealmente, abriria um 'lightbox' com JS) */
+    transform: scale(1.05);
+    opacity: 0.9;
+    cursor: pointer;
 }
 
-/* === [ 5. SEÇÃO SOBRE ] === */
+/* SOBRE */
+
 .about {
     padding: var(--spacing-xl) 0;
     background-color: var(--color-secondary);
 }
 
-/* Flexbox pra colocar a imagem do lado do texto */
 .about-container {
     display: flex;
     align-items: center;
@@ -303,22 +298,22 @@ img {
 }
 
 .about-image {
-    flex-basis: 40%; /* Imagem ocupa 40% */
+    flex-basis: 40%;
     max-width: 400px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
 
 .about-content {
-    flex-basis: 60%; /* Texto ocupa 60% */
+    flex-basis: 60%;
 }
 
 .about-content .section-title {
-    text-align: left; /* Alinha o título à esquerda aqui */
+    text-align: left;
 }
 
 .about-highlights {
-    list-style: '✨'; /* Usando um emoji como marcador */
+    list-style: '✨ ';
     margin-top: var(--spacing-md);
     padding-left: var(--spacing-lg);
 }
@@ -328,48 +323,44 @@ img {
     font-weight: 700;
 }
 
-/* === [ 6. DEPOIMENTOS ] === */
+/* DEPOIMENTOS */
+
 .testimonials {
     padding: var(--spacing-xl) 0;
     background-color: var(--color-white);
 }
 
-/* === ESTILOS PARA O CARROSSEL DE DEPOIMENTOS === */
-
 .testimonial-slider-wrapper {
-    position: relative; 
-    max-width: 900px; 
-    margin: 0 auto; /* 👈 ADICIONE ESSA LINHA PARA CENTRALIZAR O BLOCO! */
-    overflow: hidden; 
-    padding: var(--spacing-lg) 0; /* Apenas padding top/bottom */
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: var(--spacing-lg) 0;
 }
 
 .testimonial-slides {
     display: flex;
-    transition: transform 0.5s ease-in-out; 
-    touch-action: pan-y; 
+    transition: transform 0.5s ease-in-out;
+    touch-action: pan-y;
     will-change: transform;
 }
 
-/* Ajuste no bloco do carrossel (que começa em .testimonial-card) */
 .testimonial-card {
-    min-width: 100%; 
-    box-sizing: border-box; 
-    padding: var(--spacing-lg);
-    background-color: var(--color-secondary); 
+    flex: 0 0 100%;           /* cada card ocupa exatamente 100% da largura do wrapper */
+    box-sizing: border-box;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background-color: var(--color-secondary);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    margin-right: var(--spacing-md);
-    flex-shrink: 0; 
+    margin-right: 0;          /* tira o gap lateral pra não “vazar” card */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-/* E ajuste a cor do texto do quote, que também usava uma variável inexistente */
 .quote {
     font-style: italic;
-    color: var(--color-text); /* CORRIGIDO: Usando a cor de texto padrão */
+    color: var(--color-text);
     margin-bottom: var(--spacing-sm);
     font-size: 1.1rem;
 }
@@ -377,17 +368,15 @@ img {
 .client-name {
     text-align: right;
     font-weight: 600;
-    color: var(--color-white); /* Mantive branco para contraste */
+    color: var(--color-text);
 }
 
-/* Estilos para as setas (controles) */
 .slider-control {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    /* NOVO BACKGROUND com cor Primária transparente */
-    background-color: rgba(255, 214, 249, 0.8); /* Cor rosa com transparência */
-    color: var(--color-text); /* Cor do texto (seta) para o preto */
+    background-color: rgba(255, 214, 249, 0.9);
+    color: var(--color-text);
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -395,33 +384,54 @@ img {
     font-size: 1.5rem;
     line-height: 1;
     border-radius: 50%;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .slider-control:hover {
-    /* NOVO HOVER para ficar mais escuro */
     background-color: var(--color-primary-dark);
+    transform: translateY(-50%) scale(1.05);
 }
 
 .prev-btn {
-    left: var(--spacing-md); /* 16px de distância da borda esquerda */
+    left: var(--spacing-md);
 }
 
 .next-btn {
-     right: var(--spacing-md); /* 16px de distância da borda direita */
+    right: var(--spacing-md)
 }
 
-/* Ocultar as setas no mobile para focar no touch swipe */
+/* === SETAS MOBILE (premium) === */
 @media (max-width: 700px) {
+
     .slider-control {
-        display: none;
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        background-color: rgba(255, 214, 249, 0);
+        backdrop-filter: blur(8px);
+    }
+
+    /* aproximar um pouquinho pro centro pra evitar cortar */
+    .prev-btn {
+        left: 5px;
+    }
+
+    .next-btn {
+        right: 5px;
+    }
+
+    /* aumentar o padding do card pra não colidir com as setas */
+    .testimonial-card {
+        padding: var(--spacing-lg) calc(var(--spacing-lg) * 2.5);
     }
 }
 
-/* === [ 7. CTA FINAL ] === */
+
+/* CTA FINAL */
+
 .cta-final {
     padding: var(--spacing-xl) 0;
-    background-color: var(--color-primary); /* Fundo chamativo */
+    background-color: var(--color-primary);
     text-align: center;
     color: var(--color-white);
 }
@@ -438,7 +448,6 @@ img {
     margin-right: auto;
 }
 
-/* Botão final com cores invertidas */
 .final-cta {
     background-color: var(--color-white);
     color: var(--color-primary);
@@ -450,22 +459,24 @@ img {
     color: var(--color-primary-dark);
 }
 
-/* === [ 8. RODAPÉ ] === */
+/* RODAPÉ */
+
 .main-footer {
     padding: var(--spacing-xl) 0 0 0;
-    background-color: #222; /* Rodapé escuro é elegante */
+    background-color: #222;
     color: #f0f0f0;
 }
 
 .footer-container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Permite quebrar linha no mobile */
+    flex-wrap: wrap;
     gap: var(--spacing-lg);
     padding-bottom: var(--spacing-lg);
 }
 
-.footer-info h3, .footer-social h3 {
+.footer-info h3, 
+.footer-social h3 {
     font-family: var(--font-headings);
     color: var(--color-primary);
     margin-bottom: var(--spacing-md);
@@ -479,7 +490,7 @@ img {
 .footer-social a {
     color: var(--color-white);
     text-decoration: none;
-    font-size: 1.5rem; /* (Para ícones) */
+    font-size: 1.5rem;
     margin-right: var(--spacing-md);
     transition: color 0.3s ease;
 }
@@ -496,20 +507,21 @@ img {
     color: #aaa;
 }
 
-/* === [ 9. BOTÃO FLUTUANTE WHATSAPP ] === */
+/* WHATSAPP FLOAT */
+
 .whatsapp-float {
-    position: fixed; /* Fica fixo na tela */
+    position: fixed;
     bottom: var(--spacing-lg);
     right: var(--spacing-lg);
-    background-color: #25D366; /* Cor oficial do WhatsApp */
+    background-color: #25D366;
     color: var(--color-white);
     width: 60px;
     height: 60px;
-    border-radius: 50%; /* Redondo */
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.5rem; /* Tamanho do ícone (usei emoji) */
+    font-size: 2.5rem;
     text-decoration: none;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     z-index: 999;
@@ -517,26 +529,18 @@ img {
 }
 
 .whatsapp-float:hover {
-    transform: scale(1.1); /* Aumenta um pouquinho no hover */
+    transform: scale(1.1);
 }
 
+/* RESPONSIVO */
 
-/* === [ 10. RESPONSIVIDADE (MOBILE-FIRST) ] === */
-/* Agora, a mágica do 'Mobile'.
-    Usamos 'Media Queries' pra dizer: "Quando a tela for MENOR que X..."
-    (Na verdade, o ideal é Mobile-First, mas para ensinar,
-    vamos ajustar o 'Desktop-First' que fizemos).
-*/
-
-/* Para tablets e celulares grandes (até 900px) */
 @media (max-width: 900px) {
     .hero-title {
-        font-size: 3rem;
+        font-size: 2.8rem;
     }
     
-    /* Na seção 'Sobre', o layout vira 1 coluna */
     .about-container {
-        flex-direction: column; /* Coloca o texto EMBAIXO da imagem */
+        flex-direction: column;
         text-align: center;
     }
     
@@ -545,11 +549,9 @@ img {
     }
 }
 
-
-/* Para celulares (até 700px) */
 @media (max-width: 700px) {
     html {
-        font-size: 14px; /* Diminui a fonte base um pouco */
+        font-size: 14px;
     }
     
     .section-title {
@@ -557,42 +559,33 @@ img {
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
     }
 
-    /* === A MÁGICA DO MENU MOBILE === */
-    /* Mostra o botão hambúrguer */
     .menu-toggle {
         display: flex;
-        z-index: 1002; /* Fica acima do menu */
+        z-index: 1002;
     }
 
-    /* Esconde o menu de links (o 'ul') */
     .nav-links {
-        /* Posição: Ocupa a tela toda, mas fica 'fora' (transform) */
         position: fixed;
         top: 0;
         right: 0;
-        width: 70%; /* Ocupa 70% da tela */
-        height: 80vh; /* Altura total */
+        width: 70%;
+        height: 80vh;
         background-color: var(--color-white);
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        
-        /* Layout: Vira vertical */
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: var(--spacing-lg);
-        
-        /* A MÁGICA: Esconde ele pra direita */
         transform: translateX(100%);
         transition: transform 0.4s ease-in-out;
         z-index: 1001;
     }
     
-    /* QUANDO o 'nav-links' tiver a classe '.active' (que o JS vai pôr)... */
     .nav-links.active {
-        transform: translateX(0); /* ...ele 'entra' na tela. */
+        transform: translateX(0);
     }
     
     .nav-links a {
@@ -600,7 +593,6 @@ img {
         color: var(--color-text);
     }
     
-    /* Animação do botão Hambúrguer (X) quando ativo */
     .menu-toggle.active .bar:nth-child(1) {
         transform: translateY(8px) rotate(45deg);
     }
@@ -610,10 +602,7 @@ img {
     .menu-toggle.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
-    /* === FIM DO MENU MOBILE === */
 
-
-    /* Layout do Rodapé vira 1 coluna */
     .footer-container {
         flex-direction: column;
         text-align: center;
